@@ -1,3 +1,4 @@
 .byebug_history
 config/database.yml
 config/env.yml
+tmp/pids/server.pid

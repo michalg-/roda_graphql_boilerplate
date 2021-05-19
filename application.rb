@@ -3,12 +3,12 @@
 # require './api/schema'
 
 class Application < Roda
-  use(Rack::Session::Cookie, secret: 'i-am-the-secret')
+  use(Rack::Session::Cookie, secret: ENV['COOKIE_SECRET'])
   use(Rack::Protection)
   use(Rack::Protection::RemoteReferrer)
   use(Rack::Cors, debug: Env.name == 'development', logger: Logger.new($stdout)) do
     allow do
-      origins 'https://frontend-domain.com'
+      origins ENV['FRONTEND_DOMAIN']
       resource '*', headers: :any, methods: %i[get post put delete options head]
     end
   end

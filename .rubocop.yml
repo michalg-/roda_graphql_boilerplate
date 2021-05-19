@@ -1,0 +1,20 @@
+inherit_gem:
+  rubocop-shopify: rubocop.yml
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+  SupportedStyles:
+    - single_quotes
+    - double_quotes
+
+Style/SymbolArray:
+    EnforcedStyle: percent
+    SupportedStyles:
+      - percent
+      - brackets
+
+Style/WordArray:
+    EnforcedStyle: percent
+    SupportedStyles:
+      - percent
+      - brackets

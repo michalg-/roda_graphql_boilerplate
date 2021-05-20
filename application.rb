@@ -6,7 +6,7 @@ class Application < Roda
   use(Rack::Session::Cookie, secret: ENV['COOKIE_SECRET'])
   use(Rack::Protection)
   use(Rack::Protection::RemoteReferrer)
-  use(Rack::Cors, debug: Env.name == 'development', logger: Logger.new($stdout)) do
+  use(Rack::Cors, debug: Env.development?, logger: Logger.new($stdout)) do
     allow do
       origins ENV['FRONTEND_DOMAIN']
       resource '*', headers: :any, methods: %i[get post put delete options head]
@@ -27,6 +27,4 @@ class Application < Roda
   plugin(:json_parser)
 
   plugin(:all_verbs)
-
-  require './routes'
 end

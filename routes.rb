@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Application
+class Application < Roda
   route do |r|
     r.on('graphql') do
       r.post do

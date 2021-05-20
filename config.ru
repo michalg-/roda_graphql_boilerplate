@@ -13,9 +13,14 @@ require './lib/env'
 environment_path = File.join(APP_ROOT, 'config', 'environments', "#{Env.name}.rb")
 require environment_path if File.exist?(environment_path)
 
-Dir.glob(File.join('api', '**', '*.rb')).sort.each(&method(:require))
-Dir.glob(File.join('boot', '**', '*.rb')).sort.each(&method(:require))
+require 'rack/unreloader'
+Unreloader = Rack::Unreloader.new(subclasses: %w'Roda Sequel::Model', reload: Env.development?) { Application }
 
-require './application'
+unreloader_require = -> (file) { Unreloader.require(file) }
 
-run Application.freeze.app
+Dir.glob(File.join('api', '**', '*.rb')).sort.each(&unreloader_require)
+Dir.glob(File.join('boot', '**', '*.rb')).sort.each(&unreloader_require)
+
+Unreloader.require('application.rb') { 'Application' }
+Unreloader.require('./routes.rb')
+run(Env.development? ? Unreloader : Application.freeze.app)

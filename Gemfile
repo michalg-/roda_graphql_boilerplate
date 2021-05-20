@@ -17,6 +17,7 @@ end
 gem 'puma'
 gem 'rack-protection'
 gem 'rack-cors'
+gem 'rack-unreloader'
 gem 'roda'
 gem 'roda-enhanced_logger'
 

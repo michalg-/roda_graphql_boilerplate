@@ -14,7 +14,11 @@ environment_path = File.join(APP_ROOT, 'config', 'environments', "#{Env.name}.rb
 require environment_path if File.exist?(environment_path)
 
 require 'rack/unreloader'
-Unreloader = Rack::Unreloader.new(subclasses: %w'Roda Sequel::Model', reload: Env.development?) { Application }
+Unreloader = Rack::Unreloader.new(
+  subclasses: %w'Roda Sequel::Model',
+  reload: Env.development?,
+  logger: Logger.new($stdout)
+) { Application }
 
 unreloader_require = -> (file) { Unreloader.require(file) }
 

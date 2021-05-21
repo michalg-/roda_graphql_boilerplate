@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 ruby '2.7.2'
 
 group :development do
-  gem 'byebug'
+  gem 'pry'
   gem 'rake'
   gem 'rubocop'
   gem 'rubocop-performance'

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
+APP_ROOT = __dir__
 
 require './boot/load'
 
-run(Env.development? ? Unreloader : Application.freeze.app)
+run(Application.freeze.app)

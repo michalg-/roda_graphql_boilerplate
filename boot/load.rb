@@ -1,27 +1,29 @@
 # frozen_string_literal: true
-$LOAD_PATH << __dir__
-APP_ROOT = __dir__
-
 require 'bundler'
 require 'logger'
+require 'pry'
 
 Bundler.require
 
 require './lib/env'
+
 environment_path = File.join(APP_ROOT, 'config', 'environments', "#{Env.name}.rb")
 require environment_path if File.exist?(environment_path)
 
-require 'rack/unreloader'
-Unreloader = Rack::Unreloader.new(
-  subclasses: %w'Roda Sequel::Model',
-  reload: Env.development?,
-  logger: Logger.new($stdout)
-) { Application }
+require './application'
+require_relative './db'
 
-unreloader_require = -> (file) { Unreloader.require(file) }
+require 'zeitwerk'
+require 'listen'
 
-Dir.glob(File.join('api', '**', '*.rb')).sort.each(&unreloader_require)
-Dir.glob(File.join('boot', '**', '*.rb')).sort.each(&unreloader_require)
+loader = Zeitwerk::Loader.new
+loader.push_dir(File.join(APP_ROOT, 'graphql'))
+loader.push_dir(File.join(APP_ROOT, 'lib'))
+loader.push_dir(File.join(APP_ROOT, 'models'))
+loader.push_dir(File.join(APP_ROOT, 'routes'))
+loader.ignore(File.join(APP_ROOT, 'routes'))
+loader.push_dir(File.join(APP_ROOT, 'spec')) if Env.test?
+loader.enable_reloading
+loader.setup
 
-Unreloader.require('application.rb') { 'Application' }
-Unreloader.require('./routes.rb')
+Listen.to(APP_ROOT) { loader.reload }.start

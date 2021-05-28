@@ -29,6 +29,9 @@ gem 'pg'
 gem 'sequel'
 gem 'sequel_pg', require: false
 
+gem 'zeitwerk'
+gem 'listen'
+
 group :development, :test do
   gem 'envyable'
 end

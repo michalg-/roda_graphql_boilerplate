@@ -1,7 +1,4 @@
 # frozen_string_literal: true
-
-# require './api/schema'
-
 class Application < Roda
   use(Rack::Session::Cookie, secret: ENV['COOKIE_SECRET'])
   use(Rack::Protection)
@@ -14,6 +11,9 @@ class Application < Roda
   end
 
   plugin(:environments)
+  plugin(:hash_routes)
+  Dir[File.join('routes', '*.rb')].each { |file| require_relative(file) }
+  route(&:hash_branches)
 
   configure(:staging, :production) do
     plugin(:heartbeat)

@@ -12,6 +12,7 @@ require environment_path if File.exist?(environment_path)
 
 require './application'
 require_relative './db'
+require_relative './sequel'
 
 require 'zeitwerk'
 require 'listen'

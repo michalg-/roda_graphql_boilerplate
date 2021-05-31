@@ -11,6 +11,9 @@ if File.file?(bundle_binstub)
 Replace `bin/bundle` by running `bundle binstubs bundler --force`, then run this command again.")
   end
 end
+
+APP_ROOT = "#{__dir__}/.."
+
 require 'rubygems'
 require 'bundler/setup'
 require_relative '../boot/load'

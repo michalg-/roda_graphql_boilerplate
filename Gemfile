@@ -32,6 +32,8 @@ gem 'sequel_pg', require: false
 gem 'zeitwerk'
 gem 'listen'
 
+gem 'hanami-utils'
+
 group :development, :test do
   gem 'envyable'
 end

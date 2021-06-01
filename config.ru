@@ -4,7 +4,7 @@ APP_ROOT = __dir__
 require './boot/load'
 
 unless Env.development?
-  App.freeze
+  Application.freeze
 end
 
 run(Application.app)

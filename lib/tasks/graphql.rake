@@ -4,12 +4,12 @@ require 'graphql/schema_comparator'
 module SchemaUtils
   class Dump
     def self.call
-      path = __dir__ + 'app/graphql'
+      path = __dir__ + 'graphql'
       Dir[path + '**/*.rb'].each do |file|
         Kernel.require(file)
       end
 
-      file = File.join('.', 'app', 'graphql', 'schema.idl')
+      file = File.join('.', 'graphql', 'schema.idl')
       dir = File.dirname(file)
       FileUtils.mkdir_p(dir)
       new_schema = Schema.to_definition
@@ -66,7 +66,7 @@ namespace :graphql do
     desc 'Dumps GraphQL schema in IDL'
     task :dump do
       new_schema = SchemaUtils::Dump.call
-      old_schema = %x(git show origin/master:app/graphql/schema.idl)
+      old_schema = %x(git show origin/master:graphql/schema.idl)
       SchemaUtils::GenerateChangelog.new(old_schema, new_schema).call
     end
   end

@@ -10,6 +10,7 @@
 1. to jump into development console just type `bin/console`
 2. you can use `binding.pry` anytime and anywhere in the app
 3. graphiQL explorer is available under http://localhost:3000/graphiql
+4. to create GraphQL API changelog just run `rake graphql:schema:dump`
 
 ## Testing
 1. application has already preconfigured rspec, so do as usual `rspec spec`

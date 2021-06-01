@@ -13,6 +13,7 @@ group :development do
   gem 'rubocop-shopify', require: false
   gem 'rubocop-thread_safety'
   gem 'rubocop-graphql', require: false
+  gem 'graphql-schema_comparator'
 end
 
 gem 'puma'

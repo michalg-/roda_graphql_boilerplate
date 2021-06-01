@@ -1,0 +1,9 @@
+"""
+Query
+"""
+type Query {
+  """
+  Test
+  """
+  test: String!
+}

@@ -19,7 +19,7 @@ port ENV.fetch('PORT', 3000)
 environment ENV.fetch('RACK_ENV', 'development')
 
 # Specifies the `pidfile` that Puma will use.
-pidfile ENV.fetch('PIDFILE', './tmp/pids/server.pid')
+pidfile ENV.fetch('PIDFILE', 'tmp/pids/server.pid')
 
 lowlevel_error_handler do |error, _env|
   case Env.name

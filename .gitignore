@@ -2,3 +2,4 @@
 config/database.yml
 config/env.yml
 tmp/pids/server.pid
+coverage

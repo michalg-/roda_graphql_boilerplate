@@ -10,7 +10,17 @@ require 'pry'
 require_relative '../boot/load'
 require_relative '../boot/db'
 
+require 'simplecov'
+require 'simplecov-lcov'
+
 Dir.glob(File.join(APP_ROOT, 'spec', 'support', '**', '*.rb')).each { |file| require(file) }
+
+SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
+SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
+SimpleCov.start do
+  add_filter(%r{^/spec/})
+  require 'undercover'
+end
 
 RSpec.configure do |config|
   config.include(Rack::Test::Methods, type: :request)

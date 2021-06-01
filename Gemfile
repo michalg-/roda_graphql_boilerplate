@@ -14,6 +14,7 @@ group :development do
   gem 'rubocop-thread_safety'
   gem 'rubocop-graphql', require: false
   gem 'graphql-schema_comparator'
+  gem 'undercover'
 end
 
 gem 'puma'
@@ -43,4 +44,6 @@ end
 group :test do
   gem 'rack-test'
   gem 'rspec'
+  gem 'simplecov'
+  gem 'simplecov-lcov'
 end

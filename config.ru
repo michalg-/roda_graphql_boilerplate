@@ -3,4 +3,8 @@ APP_ROOT = __dir__
 
 require './boot/load'
 
-run(Application.freeze.app)
+unless Env.development?
+  App.freeze
+end
+
+run(Application.app)

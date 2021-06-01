@@ -21,6 +21,15 @@ environment ENV.fetch('RACK_ENV', 'development')
 # Specifies the `pidfile` that Puma will use.
 pidfile ENV.fetch('PIDFILE', './tmp/pids/server.pid')
 
+lowlevel_error_handler do |error, _env|
+  case Env.name
+  when 'development', 'staging'
+    [500, {}, [[error, error.backtrace].join("\n")]]
+  else
+    [500, {}, ['Something went wrong']]
+  end
+end
+
 # Specifies the number of `workers` to boot in clustered mode.
 # Workers are forked web server processes. If using threads and workers together
 # the concurrency of the application would be max `threads` * `workers`.

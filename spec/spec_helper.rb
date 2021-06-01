@@ -5,7 +5,6 @@ ENV['RACK_ENV'] = 'test'
 APP_ROOT = "#{__dir__}/.."
 
 require 'rack/test'
-require 'pry'
 
 require_relative '../boot/load'
 require_relative '../boot/db'

@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 module Types
   class QueryType < Types::BaseObject
-    field :test, String, null: false
+    description('Query')
+
+    field :test, String, null: false, description: 'Test'
     def test
       'ok'
     end

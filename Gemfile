@@ -12,6 +12,7 @@ group :development do
   gem 'rubocop-rspec'
   gem 'rubocop-shopify', require: false
   gem 'rubocop-thread_safety'
+  gem 'rubocop-graphql', require: false
 end
 
 gem 'puma'

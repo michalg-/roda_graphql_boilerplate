@@ -1,6 +1,15 @@
 inherit_gem:
   rubocop-shopify: rubocop.yml
 
+require:
+  - rubocop-performance
+  - rubocop-rspec
+  - rubocop-graphql
+  - rubocop-thread_safety
+
+AllCops:
+  NewCops: enable
+
 Style/StringLiterals:
   EnforcedStyle: single_quotes
   SupportedStyles:
@@ -18,3 +27,10 @@ Style/WordArray:
     SupportedStyles:
       - percent
       - brackets
+
+GraphQL/ObjectDescription:
+  Exclude:
+    - graphql/schema.rb
+
+RSpec/ExampleLength:
+  Max: 10

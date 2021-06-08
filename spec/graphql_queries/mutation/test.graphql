@@ -1,0 +1,17 @@
+mutation(
+  $test: String!
+) {
+  test(
+    input: {
+      test: $test
+    }
+  ) {
+    testResponse
+    success
+    errors {
+      field
+      message
+      code
+    }
+  }
+}

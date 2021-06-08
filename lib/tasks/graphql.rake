@@ -32,7 +32,7 @@ module SchemaUtils
         line_version[/v(.*)/, 1].split('.')
       end
       versions = versions.sort_by { |major, minor, patch| [major.to_i, minor.to_i, patch.to_i] }
-      version = versions.last
+      version = versions.last || [0, 0, 0]
       if result.changes.any?(&:breaking?)
         version[0] = version[0].to_i + 1
         version[1] = 0
@@ -41,8 +41,11 @@ module SchemaUtils
       end
       version[2] = 0
 
-      changelog = %x(git show origin/master:CHANGELOG_GRAPHQL.md).presence ||
+      changelog = if !%x(git show origin/master:CHANGELOG_GRAPHQL.md).empty?
+        %x(git show origin/master:CHANGELOG_GRAPHQL.md)
+      else
         "# GraphQL Schema Changelog\n"
+      end
       changelog_lines = changelog.lines
 
       changes = []

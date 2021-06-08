@@ -31,6 +31,8 @@ Style/WordArray:
 GraphQL/ObjectDescription:
   Exclude:
     - graphql/schema.rb
+    - graphql/errors.rb
+    - graphql/error_mapper.rb
 
 RSpec/ExampleLength:
   Max: 10

@@ -46,7 +46,9 @@ jobs:
       - name: Install dependencies
         run: |
           bundle config https://rubygems.pkg.github.com/mgemployment/ ${{ secrets.githubPackageRegistryToken }}
-          bundle install --jobs 4 --retry 5 --path vendor/bundle --without development
+          bundle config set --local path 'vendor/bundle'
+          bundle config set --local without 'development'
+          bundle install --jobs 4 --retry 5
       - name: Create DB & run specs
         env:
           RACK_ENV: test

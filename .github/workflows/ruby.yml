@@ -1,0 +1,57 @@
+name: Verify
+on: [pull_request]
+jobs:
+  verify:
+    name: Build
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:11.1
+        env:
+          POSTGRES_DB: roda_test_dev
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/cache@preview
+        id: cache
+        with:
+          path: ~/local/rubies
+          key: ruby-2.7.2
+      - name: Set up Ruby 2.7.2
+        id: ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.2
+          cache-available: ${{ steps.cache.outputs.cache-hit == 'true' }}
+      - name: Install required package
+        run: |
+          sudo apt-get update
+          sudo apt-get -yqq install libpq-dev
+      - name: Install bundler
+        run: |
+          gem install bundler:2.2.7
+      - name: Cache gems
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: bundler-cache-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            bundler-cache-${{ hashFiles('**/Gemfile.lock') }}
+            bundler-cache-
+      - name: Install dependencies
+        run: |
+          bundle config https://rubygems.pkg.github.com/mgemployment/ ${{ secrets.githubPackageRegistryToken }}
+          bundle install --jobs 4 --retry 5 --path vendor/bundle --without development
+      - name: Create DB & run specs
+        env:
+          RACK_ENV: test
+          DATABASE_URL: postgres://postgres@127.0.0.1
+        run: |
+          cp config/database.github_actions.yml config/database.yml
+          rake db:migrate
+          rspec

@@ -56,5 +56,6 @@ jobs:
           DATABASE_URL: postgres://postgres@127.0.0.1
         run: |
           cp config/database.github_actions.yml config/database.yml
+          cp config/env.yml.example config/env.yml
           bundle exec rake db:migrate
           bundle exec rspec

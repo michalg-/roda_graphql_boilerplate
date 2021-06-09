@@ -59,3 +59,9 @@ jobs:
           cp config/env.yml.example config/env.yml
           bundle exec rake db:migrate
           bundle exec rspec
+      - name: Run rubocop
+        run: |
+          bundle exec rubocop
+      - name: Run undercover
+        run: |
+          bundle exec undercover --compare origin/master

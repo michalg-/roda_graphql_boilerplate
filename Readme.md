@@ -14,6 +14,7 @@
 
 ## Testing
 1. application has already preconfigured rspec, so do as usual `rspec spec`
+2. application has already preconfigured github actions, firing up on every Pull Request
 
 ## Migrations
 1. generate migration file

@@ -1,0 +1,7 @@
+test:
+  :adapter: postgres
+  :user:
+  :host: localhost
+  :port: 5432
+  :database: roda_test_dev
+  :max_connections: 1

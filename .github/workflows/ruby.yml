@@ -28,7 +28,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7.2
-          cache-available: ${{ steps.cache.outputs.cache-hit == 'true' }}
+          bundler-cache: true
       - name: Install required package
         run: |
           sudo apt-get update
